@@ -1,0 +1,21 @@
+.card-body a {
+    text-decoration: none;
+    color: #212529;
+}
+
+.capaGrande {
+    max-width: 540px !important;
+}
+.capaMedia{
+    max-width: 270px !important;
+}
+.capaPequena {
+    max-width: 135px !important;
+}
+
+ .hover-zoom {
+        transition: transform 0.3s;
+    }
+    .hover-zoom:hover {
+        transform: scale(1.1);
+    }

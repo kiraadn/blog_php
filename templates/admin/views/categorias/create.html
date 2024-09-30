@@ -1,0 +1,64 @@
+{% extends 'layouts/base.html'%}
+
+{% block corpo %}
+<div class="pagetitle">
+    <h1>{{title}}</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url('admin/dashboard') }}">Home</a></li>
+            <li class="breadcrumb-item ">Categorias</li>
+            <li class="breadcrumb-item active">{{title}}</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+{{ flash()}}
+<section class="section dashboard">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="py-2 pb-0 border-0 ">
+                        <h5 class="card-title">Ficha de {{ficha}}</h5>
+                    </div>
+                    {#Formulario #}
+                    <form class="row g-3" action="{% if categoria.id %}{{url('admin/categorias/edit/'~categoria.id)}}{%else%}{{url('admin/categorias/create')}}{%endif%}" method="POST">
+
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" name="titulo" id="floatingName" placeholder="Título" value="{{categoria.titulo}}">
+                                <label for="floatingName">Título</label>
+                            </div>
+                        </div>
+                      
+                         <div class="col-12">
+                            <div class="form">
+                                <label class="mb-1 mx-2" >Texto</label>
+                                <textarea class="form-control" id="summernote" placeholder="Texto" name="texto" style="height: 200px;">{{categoria.texto}}</textarea>
+                                
+                            </div>
+                        </div>
+
+                       
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" name="status" id="floatingSelect" aria-label="Status">
+                                    <option value="1" class="text-success fw-bold" {% if categoria.status == '1' %}selected{%endif%}>Activo</option>
+                                    <option value="0" class="text-danger fw-bold" {% if categoria.status == '0' %}selected{%endif%}>Inactivo</option>
+                                </select>
+                                <label for="floatingSelect">Status</label>
+                            </div>
+                        </div>
+                        
+                        <div class="text-start mb-3">
+                            <button type="submit" class="btn btn-primary">{% if categoria.id%}Actualizar{%else%}Cadastrar{%endif%}</button>
+                        </div>
+                    </form><!-- End floating Labels Form -->
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+{% endblock %}

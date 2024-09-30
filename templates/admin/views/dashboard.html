@@ -1,0 +1,315 @@
+{% extends 'layouts/base.html'%}
+
+{% block corpo %}
+<div class="pagetitle">
+    <h1>{{title}}</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url('admin/dashboard') }}">Home</a></li>
+            <li class="breadcrumb-item active">{{title}}</li>
+        </ol>
+    </nav>
+</div>
+<!-- End Page Title -->
+{{flash()}}
+
+<section class="section dashboard">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="row">
+                {# Estatisticas#}
+                {#  Categorias Card #}
+                <div class="col-xxl-4 col-md-6">
+                    <div class="card info-card sales-card">
+
+                        <div class="filter">
+                            <a class="icon"><i class="bi bi-collection"></i></a>
+                        </div>
+
+                        <div class="card-body">
+                            <h5 class="card-title">Categorias <span>| Estatistica</span></h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-columns-gap"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>{{categorias.total}}</h6>
+                                    <span class="text-success small pt-1 fw-bold"><i class="bi bi-check-circle-fill"></i> {{categorias.activo}}</span> | 
+                                    <span class="text-danger small pt-1 fw-bold">{{categorias.inactivo}}</span> <span class="text-muted small pt-2 ps-1">inactivos</span>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                {#  endCategorias Card #}
+
+                {#  Posts Card #}
+                <div class="col-xxl-4 col-md-6">
+                    <div class="card info-card revenue-card">
+
+                        <div class="filter">
+                            <a class="icon"><i class="bi bi-bar-chart-line-fill"></i></a>
+                        </div>
+
+                        <div class="card-body">
+                            <h5 class="card-title">Posts <span>| {{'now'|date('H:i:s')}}</span></h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-journal-text"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>{{posts.total}}</h6>
+                                    <span class="text-success small pt-1 fw-bold"><i class="bi bi-check-circle-fill"></i> {{posts.activo}}</span> | 
+                                    <span class="text-danger small pt-1 fw-bold">{{posts.inactivo}}</span> <span class="text-muted small pt-2 ps-1">inactivos</span>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                {#  endPosts Card #}
+
+                {#  Usuarios Card #}
+                <div class="col-xxl-4 col-md-5">
+
+                    <div class="card info-card customers-card">
+
+                        <div class="filter">
+                            <a class="icon"><i class="bi bi-person-bounding-box"></i></a>
+                        </div>
+
+                        <div class="card-body">
+                            <h5 class="card-title">Usuários <span>| Estatistica</span></h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>{{usuarios.usuario}}</h6>
+                                    <span class="text-success small pt-1 fw-bold"><i class="bi bi-check-circle-fill"></i> {{usuarios.usuarioActivo}}</span> | 
+                                    <span class="text-danger small pt-1 fw-bold">{{usuarios.usuarioInactivo}}</span> <span class="text-muted small pt-2 ps-1">inactivos</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                {#  endUsuarios Card #}
+                {#  Admin Card #}
+                <div class="col-xxl-4 col-md-7">
+
+                    <div class="card info-card customers-card">
+
+                        <div class="filter">
+                            <a class="icon"><i class="bi bi-person-bounding-box"></i></a>
+                        </div>
+
+                        <div class="card-body">
+                            <h5 class="card-title">Admin <span>| Estatistica</span></h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>{{usuarios.admin}}</h6>
+                                    <span class="text-success small pt-1 fw-bold"><i class="bi bi-check-circle-fill"></i> {{usuarios.adminActivo}}</span> | 
+                                    <span class="text-danger small pt-1 fw-bold">{{usuarios.adminInactivo}}</span> <span class="text-muted small pt-2 ps-1">inactivos</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                {#  endAdmin Card #}
+                {# endEstatisticas#}
+                {# Posts CARD#}
+                <div class="col-12">
+                    <div class="card recent-sales overflow-auto">
+
+                        <div class="filter">
+                            <a href="{{ url('admin/posts/create') }}" class="icon rounded-circle fs-5 text-primary"><i class='bi bi-plus-circle-fill'></i>
+                            </a>
+                        </div>
+
+                        <div class="card-body">
+                            <h5 class="card-title">Últimos Posts <span>| Hoje, {{ 'now'|date('d-m-y')}}</span></h5>
+                            {% if posts %}
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Título</th>
+                                            <th scope="col" class="text-center">Views</th>
+                                            <th scope="col">Acção</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for post in posts.posts %}
+                                        <tr>
+                                            <th>{{post.id}}</th>
+                                            <td>
+                                                <div class="d-flex justify-content-start">
+                                                    {% if post.status == 1 %}
+                                                    <div class="d-flex justify-content-center fs-6">
+                                                        <i class="bi bi-record-fill text-success text-center"></i>
+                                                    </div>
+                                                    {% else %}
+                                                    <div class="d-flex justify-content-center fs-6">
+                                                        <i class="bi bi-record-fill text-danger text-center"></i>
+                                                    </div>
+                                                    {% endif %} &nbsp;
+                                                    <span class="fw-bold">{{post.titulo}}</span>
+                                                </div>
+                                                <span class="px-2 text-muted ">
+                                                    Escrito por <span class='autor fw-bold'>{{post.usuario.name}}</span> há {{contarTempo(post.categoria.created_at)}} em {{post.categoria.titulo}}
+                                                </span>
+
+                                            </td>
+                                            <td class="text-center fw-bold">
+                                                {{post.views}}
+                                            </td>
+                                            <td>
+                                                <a href="{{ url('admin/posts/edit/'~post.id) }}" data-bs-toggle="tooltip" title="Editar" class="text-primary"><i class="bi bi-pencil-fill"></i></a>
+                                                <a href="{{ url('admin/posts/delete/'~post.id) }}" data-bs-toggle="tooltip" title="Remover" class="text-danger"><i class="bi bi-trash-fill"></i></a>
+                                            </td>
+                                        </tr>
+                                        {% endfor%}
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            {% else %}
+                            <div class="alert alert-warning" role="alert">
+                                Nenhum post foi cadastrado para exibição!
+                            </div>
+                            {%endif%}
+
+                        </div>
+
+                    </div>
+                </div><!-- End Recent Sales -->
+                {# endPosts#}
+
+
+
+
+            </div>
+
+
+        </div>
+        <div class="col-lg-4">
+            <!-- Recent Activity -->
+            <div class="card">
+                <div class="filter">
+                    <a href="{{ url('admin/categorias/create') }}" class="icon text-muted rounded-circle fs-5"><i class='bi bi-plus-circle-fill'></i>
+                    </a>
+                </div>
+
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <h5 class="card-title" style="padding-bottom: 0px;">Últimas Categorias</h5>
+                    </div>
+                    <div class="activity">
+                        {% if categorias%}
+                        {# Listar Categorias#}
+                        {% for categoria in categorias.categorias %}
+                        <div class="activity-item d-flex">
+                            <div class="d-flex">
+                                <div class="activite-label w-75">{{contarTempo(categoria.created_at)}} &nbsp;</div>
+                                {% if categoria.status == 1 %}
+                                <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+                                {% else %}
+                                <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
+                                {% endif %}
+                            </div>
+                            <div class="activity-content d-flex justify-content-between">
+                                <a href="{{ url('admin/categorias/edit/'~categoria.id) }}" data-bs-toggle="tooltip" title="Editar">
+                                    <span class="fw-bold text-dark">{{categoria.titulo}}</span>
+                                    {{resumirTexto(categoria.texto,25)}}
+                                </a>
+                                <div class="d-flex justify-content-end">
+                                    <a href="{{ url('admin/categorias/edit/'~categoria.id) }}" data-bs-toggle="tooltip" title="Editar" class="text-primary px-1"><i class="bi bi-pencil-fill"></i></a>
+                                    <a href="{{ url('admin/categorias/delete/'~categoria.id) }}" data-bs-toggle="tooltip" title="Remover" class="text-danger"><i class="bi bi-trash3-fill"></i></a>
+                                </div>
+                            </div>
+                        </div><!-- End activity item-->
+
+
+                        {% endfor%}
+
+                        {%else%}
+                        <div class="alert alert-warning" role="alert">
+                            Nenhuma categoria cadastrada para exibir!
+                        </div>
+                        {%endif%}
+
+                    </div>
+
+                </div>
+            </div><!-- End Recent Activity -->
+
+
+            {#Ultimos logins#}
+            <!-- Recent Activity -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <h5 class="card-title" style="padding-bottom: 0px;">Últimos Logins</h5>
+                    </div>
+                    <div class="activity">
+                        {% if usuarios %}
+                        {# Listar usuario#}
+                        {% for login in usuarios.logins %}
+                        <div class="activity-item d-flex">
+                            <div class="activity-content">
+                                <div class="d-flex justify-content-start">
+                                    <img src="{{ url('templates/admin/assets/img/profile-img.png') }}" alt="Profile" class="profile-img rounded-circle" width="32" style="margin-right: 3px">
+                                
+                                    <a href="{{ url('admin/users/edit/'~login.id) }}" data-bs-toggle="tooltip" title="Editar">
+                                        <span class="fw-bold text-dark">{{login.name}}</span>
+                                    </a>
+                                </div>
+                                <div class="d-flex justify-content-start mt-1" style="margin-left: 4px;">
+                                    {% if login.last_login%}
+                                    <span class="text-muted" style="font-size:.8rem; padding-left: 6px">Há {{contarTempo(login.last_login)}} tempo em {{login.last_login |date('d-m-Y')}} às {{login.last_login |date('H:i:s')}}</span>
+                                    {%else%}
+                                    <span class="text-muted" style="font-size:.8rem;  padding-left: 6px">Sem registo de acesso ao sistema.</span>
+
+                                    {%endif%}
+                                </div>
+                            </div>
+
+                        </div><!-- End activity item-->
+
+
+                        {% endfor%}
+
+                        {%else%}
+                        <div class="alert alert-warning" role="alert">
+                            Nenhuma registo de login foi detectado!
+                        </div>
+                        {%endif%}
+
+                    </div>
+
+                </div>
+            </div><!-- End Recent Activity -->
+            {#endUltimos Logins#}
+        </div>
+
+
+        <div>Pagina Em desenvolvimento</div>
+    </div>
+</section>
+{% endblock %}

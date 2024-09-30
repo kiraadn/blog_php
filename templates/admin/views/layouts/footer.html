@@ -1,0 +1,19 @@
+<!-- ======= Footer ======= -->
+<footer id="footer" class="footer">
+    <div class="copyright">
+        &copy;{% if "now"|date("Y") == 2024 %}
+            2024
+            {% else %}
+            2024 - {{ "now"|date("Y") }}
+            {% endif %}   {{ constant('SITE_NOME') }}. Todos os direitos reservados
+    </div>
+    <div class="credits">
+        Designed by <a href="https://www.gaarra.com">{{ constant('SITE_NOME') }}</a>
+    </div>
+    <p class="text-end px-2 mt-0 text-muted carregamento" style="margin-bottom: 0px;" >Levou {{tempoCarregamento()}} para carregar</p>
+
+</footer><!-- End Footer -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+    <i class="bi bi-arrow-up-short"></i>
+</a>

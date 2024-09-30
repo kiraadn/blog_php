@@ -1,0 +1,42 @@
+.card-body a {
+    text-decoration: none;
+    color: #212529;
+}
+
+.profile-img{
+    width: 32px !important;
+    height: 32px !important;
+}
+.hover-zoom {
+    transition: transform 0.3s;
+}
+.hover-zoom:hover {
+    transform: scale(1.1);
+}
+div.dt-container .dt-paging {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+div.dt-container .dt-paging .dt-paging-button:hover {
+    background: none !important;
+}
+
+div.dt-container .dt-paging .dt-paging-button {
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    padding-top: .3em !important;
+}
+div.dt-container .dt-paging .ellipsis {
+    padding: 0 !important;
+    padding-bottom: .7rem !important;
+}
+
+.dt-info{
+    font-size: 14px !important;
+}
+
+.pagination {
+  
+  --bs-pagination-font-size: .8rem !important;
+}

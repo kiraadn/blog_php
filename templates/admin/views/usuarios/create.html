@@ -1,0 +1,87 @@
+{% extends 'layouts/base.html'%}
+
+{% block corpo %}
+<div class="pagetitle">
+    <h1>{{title}}</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url('admin/dashboard') }}">Home</a></li>
+            <li class="breadcrumb-item ">Usuários</li>
+            <li class="breadcrumb-item active">{{title}}</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+{{ flash()}}
+<section class="section dashboard">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="py-2 pb-0 border-0 ">
+                        <h5 class="card-title">Ficha de Cadastro</h5>
+                    </div>
+                    {#Formulario #}
+                    <form class="row g-3 needs-validation" action="{% if usuario.id %}{{url('admin/users/edit/'~usuario.id)}}{%else%}{{url('admin/users/create')}}{%endif%}" method="POST" novalidate>
+                        {{ flash()}}
+                        <div class="col-md-12 mb-2">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" name="name" id="floatingName" placeholder="Nome" value="{{usuario.name}}" required>
+                                <label for="floatingName">Nome Completo</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-2">
+                            <div class="form-floating">
+                                <input type="email" class="form-control" name="email" id="floatingName" placeholder="Email" value="{{usuario.email}}" required>
+                                <label for="floatingName">Email</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6  mb-2">
+                            <div class="form-floating">
+                                <input type="password" class="form-control" name="password" id="floatingName" placeholder="Password" value="{{usuario.password}}" required>
+                                <label for="floatingName">Senha</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6  mb-2">
+                            <div class="form-floating">
+                                <input type="password" class="form-control" name="repetir_password" id="floatingName" placeholder="Repetir Senha" value="{{usuario.password}}" {% if usuario.id %}{%else%}required{%endif%}>
+                                <label for="floatingName">Repetir Senha</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6  mb-2">
+                            <div class="form-floating mb-2">
+                                <select class="form-select" name="level" id="floatingSelect" aria-label="Status">
+                                    <option value="1" class="fw-bold" {% if usuario.status == '1' %}selected{%endif%}>Usuário</option>
+                                    <option value="2" class="fw-bold" {% if usuario.status == '2' %}selected{%endif%}>Admin</option>
+                                    <option value="3" class="fw-bold" {% if usuario.status == '3' %}selected{%endif%}>Administrador</option>
+                                </select>
+                                <label for="floatingSelect">Tipo de Acesso </label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6  mb-2">
+                            <div class="form-floating mb-2">
+                                <select class="form-select" name="status" id="floatingSelect" aria-label="Status">
+                                    <option value="1" class="text-success fw-bold" {% if usuario.status == '1' %}selected{%endif%}>Activo</option>
+                                    <option value="0" class="text-danger fw-bold" {% if usuario.status == '0' %}selected{%endif%}>Inactivo</option>
+                                </select>
+                                <label for="floatingSelect">Status</label>
+                            </div>
+                        </div>
+
+
+                        <div class="text-start mb-2">
+                            <button type="submit" class="btn btn-primary">{% if usuario.id%}Actualizar{%else%}Cadastrar{%endif%}</button>
+                        </div>
+                    </form><!-- End floating Labels Form -->
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+{% endblock %}

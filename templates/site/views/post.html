@@ -1,0 +1,67 @@
+{% extends '/layouts/base.html' %}
+{% block conteudo %}
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-9 col-md-12">
+            <h1>{{post.titulo}}</h1>
+            <div class="my-2 text-muted">
+                <small >Por <b>{{post.usuario.name}}</b>, {{post.categoria.created_at|date("d/m/Y")}} às {{post.categoria.created_at|date("H:i")}} em {{post.categoria.titulo|upper}}</small>
+            </div>
+            <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+                <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                     {% if post.capa %}
+                    <a href="{{ url('uploads/images/'~post.capa)}}" itemprop="contentUrl" data-size="1600x1200">
+                        <img width="540px" height="304px"  src="{{ url('uploads/images/thumbs/thumb-'~post.capa)}}" itemprop="thumbnail" alt="{{post.titulo}}" title="{{post.titulo}}" class="capaGrande" />
+                    </a>
+                     {% else %}
+                    <a href="{{ url('uploads/images/thumbs/thumb-universal.jpg')}}" itemprop="contentUrl" data-size="1600x1200">
+                        <img width="540px" height="304px"  src="{{ url('uploads/images/thumbs/thumb-universal.jpg')}}" itemprop="thumbnail" alt="{{post.titulo}}" title="{{post.titulo}}" class="capaGrande" />
+                    </a>
+                     {% endif %}
+                </figure>
+            </div>
+
+            <!-- Root element of PhotoSwipe. Must have class pswp. -->
+            <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="pswp__bg"></div>
+                <div class="pswp__scroll-wrap">
+                    <div class="pswp__container">
+                        <div class="pswp__item"></div>
+                        <div class="pswp__item"></div>
+                        <div class="pswp__item"></div>
+                    </div>
+                    <div class="pswp__ui pswp__ui--hidden">
+                        <div class="pswp__top-bar">
+                            <div class="pswp__counter"></div>
+                            <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                            <button class="pswp__button pswp__button--share" title="Share"></button>
+                            <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                            <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                            <div class="pswp__preloader">
+                                <div class="pswp__preloader__icn">
+                                    <div class="pswp__preloader__cut">
+                                        <div class="pswp__preloader__donut"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                            <div class="pswp__share-tooltip"></div>
+                        </div>
+                       <div class="pswp__caption">
+                            <div class="pswp__caption__center"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p>{{post.texto | raw}}</p>
+        </div>
+        <div class="col-lg-3">
+            {% include'sidebar.html'%}
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

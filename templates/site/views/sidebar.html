@@ -1,0 +1,35 @@
+{% if categorias %}
+<h4 class="text-center fw-bold">Categorias</h4>
+
+<ul class="list-group list-group-flush">
+    {% for categoria in categorias %}
+    <a href="{{ url('categoria/'~categoria.slug)}}" class="list-group-item fw-bold list-group-item-action" data-bs-toggle="tooltip" title="{{categoria.titulo}}">
+        {{categoria.titulo}}
+    </a>    
+    {% endfor%}
+</ul>
+
+{% else %}
+    <div class="alert alert-warning " role="alert">
+        <div>
+            Nenhuma categoria para exibição!
+        </div>
+    </div>
+{% endif %}
+
+
+{% if maisLidos%}
+<ul class="list-group list-group-flush mt-5 border align-items-center">
+    <li class="list-group-item  mt-1 list-group-item-action" ><h6 class="text-center fw-bold">Mais Lidos</h6></li>
+    {% for maisLido in maisLidos %}
+    <li class="d-flex list-group-item fw-semibold list-group-item-action">
+        <span class="text-muted fs-4 text-center mx-2">{{loop.index}}</span>  
+        <a href="{{ url('post/'~maisLido.slug)}}" class="fw-semibold align-content-center text-decoration-none text-dark" data-bs-toggle="tooltip" title="{{maisLido.titulo}}">
+            {{maisLido.titulo}}
+        </a>  
+    </li>
+    {% endfor%}
+</ul>
+
+{% endif %}
+

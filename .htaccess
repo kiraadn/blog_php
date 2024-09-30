@@ -1,0 +1,17 @@
+#eliminar listagem de directorios
+Options -indexes
+
+#url amigaveis
+#activar o modo de rewrite_rescrita
+RewriteEngine On
+
+#definir uma url_base
+RewriteBase /blog 
+
+#condicoes de reescrita
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteCond %{SCRIPT_FILENAME} !-l
+
+#regras
+RewriteRule ^(.*)$ index.php/$1

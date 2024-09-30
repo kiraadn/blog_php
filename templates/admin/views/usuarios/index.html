@@ -1,0 +1,164 @@
+{% extends 'layouts/base.html'%}
+
+{% block corpo %}
+
+<div class="pagetitle">
+    <h1>{{title}}</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url('admin/dashboard') }}">Home</a></li>
+            <li class="breadcrumb-item ">Usuários</li>
+            <li class="breadcrumb-item active">{{title}}</li>
+        </ol>
+    </nav>
+</div>
+<!-- End Page Title -->
+{{ flash()}}
+
+
+<section class="section dashboard">
+    <div class="row">
+        <div class="col-lg-12 for-pc">
+            <diV class="row">
+                <!-- Sales Card -->
+                <div class="col-xxl-4 col-md-4 col-sm-6">
+                    <div class="card info-card sales-card">
+                        <div class="filter">
+                            <a class="icon"><i class="bi bi-people"></i></a>
+                        </div>
+
+                        <div class="card-body">
+                            <h5 class="card-title">Total Usuários <span>|Sistema</span></h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>{{total.total}}</h6>
+                                    <span class="text-success small pt-1 fw-bold"><i class="bi bi-check-circle-fill"></i> {{total.activo}}</span> | 
+                                    <span class="text-danger small pt-1 fw-bold">{{total.inactivo}}</span> <span class="text-muted small pt-2 ps-1">inactivos</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- End Sales Card -->
+
+                <div class="col-xxl-4 col-md-4">
+
+                    <div class="card info-card customers-card">
+
+                        <div class="filter">
+                            <a class="icon"><i class="bi bi-person-bounding-box"></i></a>
+                        </div>
+
+                        <div class="card-body">
+                            <h5 class="card-title">Usuários <span>| Nivel 1</span></h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-person-circle"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>{{total.usuarios}}</h6>
+                                    <span class="text-success small pt-1 fw-bold"><i class="bi bi-check-circle-fill"></i> {{total.usuariosActivo}}</span> | 
+                                    <span class="text-danger small pt-1 fw-bold">{{total.usuariosInactivo}}</span> <span class="text-muted small pt-2 ps-1">inactivos</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- End Customers Card -->
+
+                <!-- Customers Card -->
+                <div class="col-xxl-4 col-md-4">
+
+                    <div class="card info-card revenue-card">
+
+                        <div class="filter">
+                            <a class="icon"><i class="bi bi-person-bounding-box"></i></a>
+                        </div>
+
+                        <div class="card-body">
+                            <h5 class="card-title">Admin <span>| Nivel master</span></h5>
+
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-person-bounding-box"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>{{total.admin}}</h6>
+                                    <span class="text-success small pt-1 fw-bold"><i class="bi bi-check-circle-fill"></i> {{total.adminActivo}}</span> | 
+                                    <span class="text-danger small pt-1 fw-bold">{{total.adminInactivo}}</span> <span class="text-muted small pt-2 ps-1">inactivos</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div><!-- End Customers Card -->
+                </diV>
+            </div>
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="py-2 mt-2 border-0 ">
+                            <a href="{{ url('admin/users/create') }}" class="btn btn-primary text-white">Cadastrar</a>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Nome</th>
+                                        <th scope="col">E-mail</th>
+                                        <th scope="col">Acesso</th>
+                                        <th scope="col" class="text-center">Status</th>
+                                        <th scope="col">Acção</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for usuario in usuarios %}
+                                    <tr>
+                                        <th>{{usuario.id}}</th>
+                                        <td>{{usuario.name}}</td>
+                                        <td>{{usuario.email}}</td>
+                                        <td>
+                                            {% if usuario.level == 3 %}
+                                            <span class="text-danger fw-bold">Admin</span>
+                                            {%else%}
+                                            Usuário
+                                            {%endif%}
+                                        </td>
+                                        <td>
+                                            {% if usuario.status == 1 %}
+                                            <div class="d-flex justify-content-center">
+                                                <i class="bi bi-record-fill text-success text-center"></i>
+                                            </div>
+                                            {%else %}
+                                            <div class="d-flex justify-content-center">
+                                                <i class="bi bi-record-fill text-danger text-center"></i>
+                                            </div>
+                                            {%endif %}
+                                        </td>
+                                        <td>
+                                            <a href="{{ url('admin/users/edit/'~usuario.id) }}" data-bs-toggle="tooltip" title="Editar" class="text-primary"><i class="bi bi-pencil-fill"></i></a>
+                                            <a href="{{ url('admin/users/delete/'~usuario.id) }}" data-bs-toggle="tooltip" title="Remover" class="text-danger"><i class="bi bi-trash-fill"></i></a>
+                                        </td>
+                                    </tr>
+                                    {%endfor%}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+</section>
+{% endblock %}

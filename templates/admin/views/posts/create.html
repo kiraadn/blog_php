@@ -1,0 +1,77 @@
+{% extends 'layouts/base.html'%}
+
+{% block corpo %}
+<div class="pagetitle">
+    <h1>{{title}}</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url('admin/dashboard') }}">Home</a></li>
+            <li class="breadcrumb-item ">Categorias</li>
+            <li class="breadcrumb-item active">{{title}}</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+{{ flash()}}
+<section class="section dashboard">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="py-2 pb-0 border-0 ">
+                        <h5 class="card-title">Ficha de Cadastro</h5>
+                    </div>
+                    {#Formulario #}
+                    <form class="row g-3" action="{% if post.id %}{{url('admin/posts/edit/'~post.id)}}{%else%}{{url('admin/posts/create')}}{%endif%}" method="POST" enctype="multipart/form-data">
+
+                        <div class="col-md-12">
+                            <input type="file" class="form-control" name="capa" accept=".png, .jpg, .jpeg">
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" name="titulo" id="floatingName" placeholder="Título" value="{{post.titulo}}">
+                                <label for="floatingName">Título</label>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form">
+                                <label class="mb-1 mx-2" >Texto</label>
+                                <textarea class="form-control" id="summernote" placeholder="Texto" name="texto" style="height: 200px;">{{post.texto}}</textarea>
+                                
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" name="categoria_id" id="floatingSelect" aria-label="Categoria">
+                                    {% for categoria in categorias %}
+                                    <option value="{{categoria.id}}" {% if categoria.id == post.categoria_id %}selected{%endif%}>{{categoria.titulo}}</option>
+                                    {% endfor %}
+                                </select>
+                                <label for="floatingSelect">Categoria</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" name="status" id="floatingSelect" aria-label="Status">
+                                    <option value="1" class="text-success fw-bold" {% if post.status == '1' %}selected{%endif%}>Activo</option>
+                                    <option value="0" class="text-danger fw-bold" {% if post.status == '0' %}selected{%endif%}>Inactivo</option>
+                                </select>
+                                <label for="floatingSelect">Status</label>
+                            </div>
+                        </div>
+
+
+                        <div class="text-start mb-3">
+                            <button type="submit" class="btn btn-primary">{% if post.id%}Actualizar{%else%}Cadastrar{%endif%}</button>
+                        </div>
+                    </form><!-- End floating Labels Form -->
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+{% endblock %}

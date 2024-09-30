@@ -1,0 +1,61 @@
+<header class="p-3 text-bg-dark">
+    <div class="container-fluid">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+            </a>
+
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="{{ url() }}" class="nav-link px-2 text-secondary">Home</a></li>
+                <li><a href="{{ url('sobre') }}" class="nav-link px-2 text-white">Sobre-nos</a></li>
+                <li class="nav-item dropdown">
+                    <a  class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Categorias
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        {% for categoria in categorias %}
+                        <li>
+                            <a class="dropdown-item" href="{{ url('categoria/'~categoria.slug)}}">
+                                {{categoria.titulo}}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </ul>
+
+            <form data-url-busca="{{ url('buscar')}}" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+                <input type="search" name="busca" id="busca" class="form-control form-control-dark text-bg-dark" placeholder="Pesquisar..." aria-label="Search" >
+            </form>
+
+            <div class="text-end">
+
+
+                {%if usuario() %}
+                     <a  class="dropdown-toggle text-white fw-semibold btn btn-danger pt-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                         <i class="bi bi-person fw-bold"></i>
+                         {{usuario().name}}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        
+                        <li class="mb-1">
+                             <a class="dropdown-item text-white fw-bold" href="{{ url('admin/dashboard')}}">Dashboard</a>
+                        </li>
+                        <li class="bg-danger" style="margin-left: 5px">
+                             <a class="dropdown-item text-white" href="{{ url('admin/logout')}}">Sair</a>
+                        </li>
+                      
+                    </ul>
+                    
+                   
+                {%else%}
+                <a href="{{ url('admin/login')}}" type="button" class="btn btn-warning fw-bold">Login</a>
+                <a href="{{ url('admin/login')}}" type="button" class="btn btn-success">Cadastrar</a>
+                {%endif%}
+
+
+            </div>
+        </div>
+        <div class="my-3" id="buscaResultado"></div>
+    </div>
+</header>
